@@ -44,29 +44,26 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error loading product data:', error));
 
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            if (sidebar) {
-                sidebar.classList.toggle('-translate-x-full');
-            } else {
-                console.error('Sidebar element not found');
-            }
-        }
-        
-        // Attach function to global scope
-        window.toggleSidebar = toggleSidebar;
-        
-        
-        
-        document.addEventListener("DOMContentLoaded", () => {
-            window.toggleSidebar = toggleSidebar;
-        });
-        
-        // Keep the DOMContentLoaded listener for other initialization
+     
+ // Ensure the function is globally accessible
+   window.toggleSidebar = function () {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("-translate-x-full");
+  };
+  
+
+// Attach it to the window object if needed
+window.toggleSidebar = toggleSidebar;
+
+// Keep the DOMContentLoaded listener for other initialization
 document.addEventListener("DOMContentLoaded", () => {
     console.log("DOM fully loaded");
 });
 
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('open'); // Toggles the 'open' class
+}
     
 
     // Toggle Products Functionality (Show More/Show Less)
@@ -117,13 +114,54 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem('cart', JSON.stringify(cart));
     }
 
-    // Update cart count displayed in the icon
-    function updateCartCount() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        document.getElementById('cart-count').textContent = totalItems;
-    }
+// Add to cart
+window.addToCart = (id) => {
+    const product = products.find(p => p.id === id);
 
+    if (product) {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingProduct = cart.find(item => item.id === id);
+
+        if (existingProduct) {
+            existingProduct.quantity += 1;
+        } else {
+            cart.push({ ...product, quantity: 1 });
+        }
+
+        // Update local storage
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Update cart count in DOM
+        updateCartCount();
+
+        alert(`${product.name} has been added to your cart!`);
+    } else {
+        alert('Product not found!');
+    }
+};
+
+// Update cart count for all elements with id="cart-count"
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+
+    // Select all elements with id="cart-count"
+    const cartCountElements = document.querySelectorAll('#cart-count');
+    if (cartCountElements.length > 0) {
+        cartCountElements.forEach(cartCount => {
+            cartCount.textContent = totalItems; // Update each element
+        });
+    } else {
+        console.error('Cart count elements not found in DOM');
+    }
+}
+
+
+// Initialize cart count on page load
+document.addEventListener('DOMContentLoaded', updateCartCount);
+
+
+        
     // Load related products
     function loadRelatedProducts(products, category) {
         const relatedProductsContainer = document.getElementById('related-products');

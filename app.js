@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-   // Ensure the function is globally accessible
-   window.toggleSidebar = function () {
+ // Ensure the function is globally accessible
+ window.toggleSidebar = function () {
     const sidebar = document.getElementById("sidebar");
     sidebar.classList.toggle("-translate-x-full");
   };

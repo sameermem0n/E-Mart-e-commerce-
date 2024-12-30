@@ -7,28 +7,46 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="product-details.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+      /* Sidebar styles */
+#sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out; /* Smooth sliding */
+}
 
+/* Sidebar visible */
+#sidebar.open {
+    transform: translateX(0); /* Bring sidebar into view */
+}
+#cart-count {
+    display: inline-block;
+    visibility: visible;
+}
+
+
+    </style>
   </head>
 <body class="bg-gray-100">
-  <!-- Navbar -->
+ <!-- Navbar -->
         <!-- For small screens (less than 768px) -->
         <div class="md:hidden">
           <nav class="flex items-center justify-between px-4 py-2 bg-white shadow-md">
             <!-- Logo and Brand Name -->
             <span class="flex items-center">
                <!-- Hamburger Icon -->
-<button id="sidebarToggle" class="text-blue-600 ml-2 text-xl focus:outline-none" onclick="toggleSidebar()">
-  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <button id="sidebarToggle" class="text-blue-600 ml-2 text-xl focus:outline-none" onclick="toggleSidebar()">
+     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-  </svg>
-</button>
+      </svg>
+   </button>
               <img class="w-8 h-8 ml" src="Images\logo-symbol.png" alt="Brand Logo">
               <a class="ml-2  text-xl font-semibold text-blue-400" href="index.html">E-Mart</a>
             </span>
      <!-- Sidebar -->
-     <div id="sidebar" class="fixed top-0 left-0 w-3/4 md:w-1/4 h-full bg-white shadow-lg transform -translate-x-full transition-transform duration-300 z-50">
-      <button onclick="toggleSidebar()" class="p-4 text-gray-500 hover:text-gray-900">Close</button>
-      <div class="w-64 h-screen bg-gray-100 p-4">
+<div id="sidebar" class="fixed top-0 left-0 w-3/4 md:w-1/4 h-full bg-white shadow-lg transform -translate-x-full transition-transform duration-300 z-50">
+  <button onclick="toggleSidebar()" class="p-4 text-gray-500 hover:text-gray-900">Close</button>
+  <ul class="px-4">
+    <div class="w-64 h-screen bg-gray-100 p-4">
       <!-- User Section -->
       <div class="mb-6">
         <div class="flex items-center space-x-2">
@@ -73,30 +91,23 @@
       </div>
     </div>
     
-
-     
   </ul>
-
 </div>
       
-            <!-- Cart/Profile Icons -->
+            <!--Cart/Profile Icons -->
     <div class="flex items-center space-x-4">
-   
           <div class="flex items-center space-x-4 pr-15">
               <!-- Cart Icon -->
-              <a href="checkout.html" class="relative">
+              <a href="cart.html" class="relative">
                 <img src="https://img.icons8.com/material-outlined/24/000000/shopping-cart.png" alt="Cart">
                 <span id="cart-count" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">0</span>
             </a>
-            
-           
+              
               <!-- Profile Icon -->
               <a href="profile.html">
                  <img src="https://img.icons8.com/material-outlined/24/000000/user.png" alt="User">
               </a>
            </div>
-
-            
           </nav>
     
           <!-- Search Bar -->
@@ -120,7 +131,8 @@
                 Search
               </button>
             </div>          </div>
-  </div>  
+  </div>
+    
  <!-- For larger screens (768px and above) -->
         <div class="hidden md:block">
           <nav class="flex items-center px-5 py-2 border-b-2 border-gray-200 md:px-2 justify-evenly">
@@ -146,7 +158,7 @@
 
             <div class="flex items-center space-x-4">
              <!-- Cart Icon -->
-             <a href="checkout.html" class="relative">
+             <a href="cart.html" class="relative">
               <img src="https://img.icons8.com/material-outlined/24/000000/shopping-cart.png" alt="Cart">
               <span id="cart-count" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">0</span>
           </a>
@@ -200,8 +212,6 @@
 </div>
 
 
-
-
     <!-- Product Details Section -->
     <div class="container mx-auto px-4 py-6">
       <div class="flex flex-wrap lg:flex-nowrap">
@@ -237,8 +247,6 @@
           </div>
       </div>
   </div>
-
-  
 
   <!-- Related Products Section -->
   <div class="container mx-auto px-4 py-6">
